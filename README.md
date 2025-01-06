@@ -9,7 +9,7 @@ to run the api container you'll need to run the following commands in the termin
     curl http://<host machine ip/ hostname>:5000
 '''
 ## Api endpoints:
-    / - get filtered human charachters from Earth
+    /            - get filtered human charachters from Earth
     /healthcheck -  to check server is responsive
 ### Build the container
 '''
