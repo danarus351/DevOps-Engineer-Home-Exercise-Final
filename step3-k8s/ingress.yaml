@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-rickandmorty
+  namespace: rickandmorty
+spec:
+  rules:
+  - host: rickandmorty.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: rickandmorty-service
+            port:
+              number: 5000
+      - path: /healthcheck
+        pathType: Prefix
+        backend:
+          service:
+            name: rickandmorty-service
+            port:
+              number: 5000
+  ingressClassName: nginx
