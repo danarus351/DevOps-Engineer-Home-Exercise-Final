@@ -12,11 +12,8 @@ to run the api container you'll need to run the following commands in the termin
     /            - get filtered human charachters from Earth
     /healthcheck -  to check server is responsive
 ### Build the container
-'''
     cd ./step2-Dockrized-api
-    docker build -t rickandmorty_api .
-    
-'''
+    docker build -t rickandmorty_api . 
 ### Run the container 
 '''
    docker run -d -p 5000:5000 --name rickandmorty_api  rickandmorty_api 
