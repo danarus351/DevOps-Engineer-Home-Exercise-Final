@@ -1,0 +1,33 @@
+{{- range $fullName, $svc := .Values.services }}
+{{- $svc := mergeOverwrite (deepCopy $.Values.default) (deepCopy $svc) }}
+{{- if $svc.enabled }}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app: {{ $fullName }}
+spec:
+  replicas: {{ $svc.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ $fullName }}
+  template:
+    metadata:
+      labels:
+        app: {{ $fullName }}
+    spec:
+      containers:
+      - name: {{ $fullName }}
+        image: {{ $svc.image.repository }}/{{ $svc.image.name }}:{{ $svc.image.tag }}
+        imagePullPolicy: {{ $svc.image.pullPolicy }}
+        ports:
+        {{- range $index, $service := $svc.service }}
+        - name: {{ $service.name | default (print "tcp-" $index) | trunc 15}}
+          containerPort: {{ $service.port }}
+          protocol: TCP
+        {{- end }}
+{{- end }}
+{{- end }}

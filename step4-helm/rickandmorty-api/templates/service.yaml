@@ -1,0 +1,21 @@
+{{- range $fullName, $svc := .Values.services }}
+{{- $svc := mergeOverwrite (deepCopy $.Values.default) (deepCopy $svc) }}
+{{- if and $svc.enabled $svc.service }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}
+spec:
+  selector:
+    app: {{ $fullName }}
+  ports:
+{{- range $index, $service := $svc.service }}
+  - port: {{ $service.port }}
+    targetPort: {{ $service.port}} 
+    name: {{ $service.name }}-svc
+    protocol: TCP
+{{- end }}
+{{- end }}
+{{- end }}

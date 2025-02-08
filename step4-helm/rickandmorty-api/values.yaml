@@ -1,0 +1,43 @@
+default:
+
+# Default image definitions 
+  image:
+    repository: docker.io
+    tag: latest
+    pullPolicy: IfNotPresent
+
+# Default services behavior
+  enabled: true
+
+# Default pods replicas number definition
+  replicaCount: 1
+
+# Default pods resources limitations - will be applied on all pods created by this chart (Mendatory for HPA)
+  resources: {} 
+
+# Default labels will be applied on all deployments created by this chart
+  labels: {}
+
+############
+# Services #
+# ##########
+
+services:
+# Full example:
+  rickandmorty-api:
+       enabled: true
+       image:
+         name: danarus351/rickandmorty-api
+         repository: docker.io
+         tag: latest
+         pullPolicy: IfNotPresent
+       replicaCount: 1
+       service:
+       - port: 5000
+         name: rickandmorty-service
+       ingress:
+         hosts:
+         - rickandmorty.com
+         paths:
+         - /
+         - /healthcheck
