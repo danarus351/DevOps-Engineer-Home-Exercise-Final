@@ -30,4 +30,19 @@ to run the api container you'll need to run the following commands in the termin
 now you are able to access the api:
      curl http://rickandmorty.com
      
-## in k8s you are accessing the api through port 80
+>[!NOTE] 
+> ### in k8s you are accessing the api through port 80. 
+
+### step4 - helm (packagin for easy delivary)
+>[!IMPORTANT]
+> please make sure ingress controller is deployed
+## install the helm chart
+    helm upgrade --install  rickandmorty ./step4-helm/rickandmorty-api 
+### get ingress external ip and add it to hosts file 
+    kubectl get ingress -n rickandmorty
+### add this line to hosts file 
+    < ingress adress > rickandmorty.com
+now you are able to access the api:
+
+     curl http://rickandmorty.com
+    
