@@ -15,7 +15,7 @@ jobs:
           addons: ingress
       - name: new image build 
         run: |
-          minikube image build -t danarus351/rickandmorty-api:latest
+          minikube image build ./step2-Dockerized-api/  -t danarus351/rickandmorty-api:latest
       
       - name: install helm 
         uses: azure/setup-helm@v3
