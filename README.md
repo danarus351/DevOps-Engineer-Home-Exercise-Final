@@ -45,4 +45,11 @@ now you are able to access the api:
 now you are able to access the api:
 
      curl http://rickandmorty.com
-    
+### step5 - github action and testing 
+#### workflow -
+the workflow is containing one job named test which run the following steps:
+1. copy the code to the action runner
+2. install and run minikube as a testing k8s cluster
+3. build docker image with the latest push code
+4. deploy the helm chart from step 4
+5. run helm test suite which check all the api endpoint in case any test fail it will fail the actio
