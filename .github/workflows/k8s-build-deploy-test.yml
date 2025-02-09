@@ -13,12 +13,15 @@ jobs:
         uses: medyagh/setup-minikube@latest
         with:
           addons: ingress
+
       - name: new image build 
         run: |
           minikube image build ./step2-Dockerized-api/  -t danarus351/rickandmorty-api:latest
       
       - name: install helm 
         uses: azure/setup-helm@v3
+        with:
+          version: v3.9.0
       
       - name: deploy helm chart 
         run: |
