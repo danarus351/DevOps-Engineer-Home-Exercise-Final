@@ -17,7 +17,7 @@ def filter_chars():
 
 @app.route('/healthcheck', methods=['GET'])
 def healthcheck():
-    return jsonify({'status': 'OK'})
+    return jsonify({'status': 'OK'}),200 
 
 @app.errorhandler(404)
 def page_not_found(e):

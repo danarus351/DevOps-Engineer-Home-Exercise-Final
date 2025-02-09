@@ -1,0 +1,22 @@
+{{- range $fullName, $svc := .Values.services }}
+{{- $svc := mergeOverwrite (deepCopy $.Values.default) (deepCopy $svc) }}
+{{- if $svc.enabled }}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+    name: {{ $fullName }}-test-connectivity
+    labels: 
+        app: {{ $fullName }}
+    annotations:
+        "helm.sh/hook": test
+spec:
+    containers:
+        - name: wget 
+          image: busybox
+          command: ['sh', '-c']
+          args:
+          - "{{- range $path := $svc.ingress.paths }} wget -qO- {{ index $svc.ingress.hosts 0 }}{{ $path }} || exit 1; {{ end -}}" 
+    restartPolicy: Never
+{{- end }}
+{{- end }}

@@ -1,0 +1,29 @@
+name: rickandmorty helm tester
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout 
+        uses: actions/checkout@v4
+      
+      - name: Setup a k8s cluster 
+        id: minikube
+        uses: medyagh/setup-minikube@latest
+        with:
+          addons: ingress
+      - name: new image build 
+        run: |
+          minikube image build -t danarus351/rickandmorty-api:latest
+      
+      - name: install helm 
+        uses: azure/setup-helm@v3
+      
+      - name: deploy helm chart 
+        run: |
+          helm upgrade --install  rickandmorty ./step4-helm/rickandmorty-api --set image.repository=minikube
+          kubectl get all 
+
+      - name: run tests suite
+        run: helm test rickandmorty
